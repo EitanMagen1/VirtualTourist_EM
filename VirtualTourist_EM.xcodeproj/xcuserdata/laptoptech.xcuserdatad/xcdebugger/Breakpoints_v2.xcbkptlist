@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/AlbumViewController.swift"
+            timestampString = "475344857.245436"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "27"
+            endingLineNumber = "27">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/MapViewController.swift"
+            timestampString = "475413501.059783"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "mapView(_:annotationView:calloutAccessoryControlTapped:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/PhotoCollectionViewCell.swift"
+            timestampString = "475422326.785856"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "PhotoCollectionViewCell"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.PhotoCollectionViewCell.imageView.getter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIImageView&gt;"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/VirtualTourist_EM/PhotoCollectionViewCell.swift"
+                  timestampString = "475422201.502589"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.PhotoCollectionViewCell.imageView.setter : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIImageView&gt;"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/VirtualTourist_EM/PhotoCollectionViewCell.swift"
+                  timestampString = "475422201.503156"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.PhotoCollectionViewCell.imageView.materializeForSet : Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UIImageView&gt;"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/VirtualTourist_EM/PhotoCollectionViewCell.swift"
+                  timestampString = "475422201.503521"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.PhotoCollectionViewCell.init (VirtualTourist_EM.PhotoCollectionViewCell.Type)(frame : __C.CGRect) -&gt; VirtualTourist_EM.PhotoCollectionViewCell"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/VirtualTourist_EM/PhotoCollectionViewCell.swift"
+                  timestampString = "475422201.505195"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "150">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.PhotoCollectionViewCell.init (VirtualTourist_EM.PhotoCollectionViewCell.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;VirtualTourist_EM.PhotoCollectionViewCell&gt;"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/VirtualTourist_EM/PhotoCollectionViewCell.swift"
+                  timestampString = "475422201.505553"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "85">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrPhotosViewController.swift"
+            timestampString = "475423518.077021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
+            landmarkName = "configureCell(_:photo:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>
