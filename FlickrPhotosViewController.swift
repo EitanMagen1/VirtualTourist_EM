@@ -75,7 +75,9 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
                 
                 // Parse the array of photo dictionaries
                 let _ = result!.map() { (dictionary: [String : AnyObject]) -> Photo in
+                    
                     let photo = Photo()
+                    photo.imageURL = dictionary[FlickrClient.Constants.EXTRAS] as? String
                     photo.pin = self.pin
                     self.photos.append(photo)
                     return photo
@@ -96,13 +98,13 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return photos.count
+        return 3
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 10
+        return photos.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

@@ -129,15 +129,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrPhotosViewController.swift"
-            timestampString = "475423518.077021"
+            timestampString = "475427083.693986"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
             landmarkName = "configureCell(_:photo:)"
             landmarkType = "5">
          </BreakpointContent>
