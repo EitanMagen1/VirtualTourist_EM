@@ -156,8 +156,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="ZE8-AT-9RQ" id="k8r-9P-opN"/>
                         <outlet property="collectionView2" destination="8tI-nH-7ES" id="14U-3M-91w"/>
-                        <outlet property="indicator" destination="ZE8-AT-9RQ" id="GeL-dd-pkI"/>
                         <outlet property="mapview" destination="7Sm-9d-uzL" id="Duf-p9-qXI"/>
                         <outlet property="newDownloadButton" destination="xH8-Ld-5lY" id="LDN-y0-E6a"/>
                     </connections>

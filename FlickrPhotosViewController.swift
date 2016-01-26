@@ -27,11 +27,12 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
     @IBOutlet weak var mapview: MKMapView!
     @IBOutlet weak var collectionView2: UICollectionView!
     @IBOutlet weak var newDownloadButton: UIButton!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        indicator.hidden = true
+        
+        activityIndicator.hidden = true
         mapview.delegate = self
         self.collectionView2.dataSource = self
         self.collectionView2.delegate = self
@@ -76,7 +77,7 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         self.newDownloadButton.hidden = true
         self.enableUserInteraction = false
         self.downloadingCount = Int(FlickrClient.Constants.PER_PAGE)!
-        indicator.hidden = false
+            showActivityIndicator()
         FlickrClient.sharedInstance().getPhotos(pin) { (success, result, totalPhotos, totalPages, errorString) in
             if (success == true) {
                 print("\(totalPhotos) photos have been found!")
@@ -144,7 +145,7 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         self.downloadingCount--
         if self.downloadingCount == 0 {
             self.newDownloadButton.hidden = false
-            self.indicator.hidden = true
+            showActivityIndicator()
             self.enableUserInteraction = true
         }
 
@@ -190,4 +191,18 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         
         return pinView
     }
+    
+    func showActivityIndicator() {
+        if activityIndicator.hidden {
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+            activityIndicator.hidden = true
+            activityIndicator.hidesWhenStopped = true
+            
+            
+        }
+    }
+
 }
