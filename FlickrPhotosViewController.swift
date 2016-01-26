@@ -64,11 +64,19 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         
     }
     
+    @IBAction func newDownloadTouchUpInside(sender: AnyObject) {
+        
+        photos = []
+        
+        loadData()
+    }
+
+    
     func loadData() {
         self.newDownloadButton.hidden = true
         self.enableUserInteraction = false
         self.downloadingCount = Int(FlickrClient.Constants.PER_PAGE)!
-        
+        indicator.hidden = false
         FlickrClient.sharedInstance().getPhotos(pin) { (success, result, totalPhotos, totalPages, errorString) in
             if (success == true) {
                 print("\(totalPhotos) photos have been found!")
@@ -88,7 +96,7 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
                     self.collectionView2.reloadData()
                 }
             } else {
-                print("Finding photos error!")
+                self.presentError("Finding photos error! \(errorString)")
             }
         }
     }
@@ -97,13 +105,11 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
     // MARK: UICollectionViewDataSource
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 3
+        return 1
     }
     
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return photos.count
     }
     
@@ -112,17 +118,36 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         
         let photo = photos[indexPath.row]
         
-        configureCell(cell, photo: photo)
-
+       configureCell(cell, photo: photo)
+        
         return cell
     }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if (self.enableUserInteraction) {
+
+        photos.removeAtIndex(indexPath.row)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.collectionView2.reloadData()
+        }
+        }
+    }
+
     // MARK: - Configure Cell
     
     func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
         var cellImage = UIImage(named: "posterPlaceHolder")
         
         cell.imageView!.image = nil
-        
+        self.downloadingCount--
+        if self.downloadingCount == 0 {
+            self.newDownloadButton.hidden = false
+            self.indicator.hidden = true
+            self.enableUserInteraction = true
+        }
+
         // Set the Album Image
         if photo.imageURL == nil || photo.imageURL == "" {
             cellImage = UIImage(named: "noImage")
@@ -134,22 +159,35 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
                 if (success == true) {
                     // update the model, so that the infrmation gets cashed
                     photo.albumImage = result
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
+                    dispatch_async(dispatch_get_main_queue()) {
                         cell.imageView!.image = result
                         
-                        self.downloadingCount--
-                        if self.downloadingCount == 0 {
-                            self.newDownloadButton.hidden = false
-                            self.enableUserInteraction = true
                         }
-                    })
+
                 } else {
-                    print(errorString)
+                    self.presentError("\(errorString)")
                 }
             }
         }
         
         cell.imageView!.image = cellImage
+    }
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.canShowCallout = true
+            pinView!.draggable = true
+            pinView!.pinTintColor = MKPinAnnotationView.purplePinColor()
+            pinView!.rightCalloutAccessoryView = UIButton(type: .InfoDark)
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
     }
 }

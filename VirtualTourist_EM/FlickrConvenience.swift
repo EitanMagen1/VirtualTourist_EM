@@ -47,6 +47,7 @@ extension FlickrClient {
         taskForGETMethod("", parameters: methodArguments as! [String : AnyObject]) { data, error in
             if let _ = error {
                 completionHandler(success: false, photos: nil, totalPhotos: 0, totalPages: 0, errorString: "Get Photo Failed.")
+                
             } else {
                 if let photosDictionary = data!.valueForKey("photos") as? [String:AnyObject] {
                     

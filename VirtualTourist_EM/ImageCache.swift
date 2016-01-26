@@ -57,7 +57,7 @@ class ImageCache {
         // And in documents directory
         let data = UIImagePNGRepresentation(image!)!
         data.writeToFile(path, atomically: true)
-        print(path)
+       // print(path)
     }
     
     func removeImage(identifier: String) {

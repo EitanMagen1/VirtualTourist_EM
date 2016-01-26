@@ -29,7 +29,7 @@ class Photo  {
         }
         
         set {
-            print("DEBUG: \(newValue) \(imageURL)")
+            //print("DEBUG: \(newValue) \(imageURL)")
             if let imageURL = self.imageURL {
                 FlickrClient.Caches.imageCache.storeImage(newValue, withIdentifier: getFilename(NSURL(string: imageURL)!))
                 

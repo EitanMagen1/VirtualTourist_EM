@@ -133,11 +133,75 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrPhotosViewController.swift"
-            timestampString = "475427083.693986"
+            timestampString = "475523100.935422"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "configureCell(_:photo:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.FlickrPhotosViewController.configureCell (VirtualTourist_EM.FlickrPhotosViewController)(VirtualTourist_EM.PhotoCollectionViewCell, photo : VirtualTourist_EM.Photo) -&gt; ()"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/FlickrPhotosViewController.swift"
+                  timestampString = "475514247.817383"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "139"
+                  endingLineNumber = "139"
+                  offsetFromSymbolStart = "1031">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "VirtualTourist_EM.FlickrPhotosViewController.(configureCell (VirtualTourist_EM.FlickrPhotosViewController) -&gt; (VirtualTourist_EM.PhotoCollectionViewCell, photo : VirtualTourist_EM.Photo) -&gt; ()).(closure #1)"
+                  moduleName = "VirtualTourist_EM"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/FlickrPhotosViewController.swift"
+                  timestampString = "475514247.817692"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "86">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/FlickrClient.swift"
+            timestampString = "475519655.738237"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "taskForGETMethod(_:parameters:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FlickrPhotosViewController.swift"
+            timestampString = "475523100.935422"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "configureCell(_:photo:)"
             landmarkType = "5">
          </BreakpointContent>
