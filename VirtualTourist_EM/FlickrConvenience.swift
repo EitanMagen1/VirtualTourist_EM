@@ -38,6 +38,7 @@ extension FlickrClient {
             "bbox": createBoundingBoxString(pin.latitude, longitude: pin.longitude),
             "safe_search": Constants.SAFE_SEARCH,
             "extras": Constants.EXTRAS,
+            "accuracy" : Constants.ACCURACY ,
             "format": Constants.DATA_FORMAT,
             FlickrClient.ParameterKeys.NoJSONCallback: Constants.NO_JSON_CALLBACK,
             FlickrClient.ParameterKeys.Page: randomPage,
@@ -97,12 +98,12 @@ extension FlickrClient {
     }
     
     func createBoundingBoxString(latitude: Double, longitude: Double) -> String {
-        let bottom_left_lon = max(longitude - Constants.BOUNDING_BOX_HALF_WIDTH, Constants.LON_MIN)
-        let bottom_left_lat = max(latitude - Constants.BOUNDING_BOX_HALF_HEIGHT, Constants.LAT_MIN)
-        let top_right_lon = min(longitude + Constants.BOUNDING_BOX_HALF_WIDTH, Constants.LON_MAX)
-        let top_right_lat = min(latitude + Constants.BOUNDING_BOX_HALF_HEIGHT, Constants.LAT_MAX)
+        let minimum_longitude = longitude - Constants.BOUNDING_BOX_HALF_WIDTH
+        let minimum_latitude = latitude - Constants.BOUNDING_BOX_HALF_HEIGHT
+        let maximum_longitude = longitude + Constants.BOUNDING_BOX_HALF_WIDTH
+        let maximum_latitude = latitude + Constants.BOUNDING_BOX_HALF_HEIGHT
         
-        return "\(bottom_left_lon),\(bottom_left_lat),\(top_right_lon),\(top_right_lat)"
+        return "\(minimum_longitude),\(minimum_latitude),\(maximum_longitude),\(maximum_latitude)"
     }
 }
 
