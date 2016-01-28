@@ -23,22 +23,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "VirtualTourist_EM/MapViewController.swift"
-            timestampString = "475413501.059783"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "mapView(_:annotationView:calloutAccessoryControlTapped:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "VirtualTourist_EM/PhotoCollectionViewCell.swift"
             timestampString = "475422326.785856"
             startingColumnNumber = "9223372036854775807"
@@ -132,54 +116,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FlickrPhotosViewController.swift"
-            timestampString = "475524188.669537"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "configureCell(_:photo:)"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VirtualTourist_EM.FlickrPhotosViewController.configureCell (VirtualTourist_EM.FlickrPhotosViewController)(VirtualTourist_EM.PhotoCollectionViewCell, photo : VirtualTourist_EM.Photo) -&gt; ()"
-                  moduleName = "VirtualTourist_EM"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/FlickrPhotosViewController.swift"
-                  timestampString = "475514247.817383"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "139"
-                  endingLineNumber = "139"
-                  offsetFromSymbolStart = "1031">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "VirtualTourist_EM.FlickrPhotosViewController.(configureCell (VirtualTourist_EM.FlickrPhotosViewController) -&gt; (VirtualTourist_EM.PhotoCollectionViewCell, photo : VirtualTourist_EM.Photo) -&gt; ()).(closure #1)"
-                  moduleName = "VirtualTourist_EM"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/laptoptech/Documents/IOS%20nanodegree/VirtualTourist_EM/FlickrPhotosViewController.swift"
-                  timestampString = "475514247.817692"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "140"
-                  endingLineNumber = "140"
-                  offsetFromSymbolStart = "86">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "VirtualTourist_EM/FlickrClient.swift"
             timestampString = "475519655.738237"
             startingColumnNumber = "9223372036854775807"
@@ -197,12 +133,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FlickrPhotosViewController.swift"
-            timestampString = "475524188.669537"
+            timestampString = "475618321.851672"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
-            landmarkName = "configureCell(_:photo:)"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "loadData()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/MapViewController.swift"
+            timestampString = "475597525.189468"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "dropPin(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/Pin.swift"
+            timestampString = "475673101.942315"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
+            landmarkName = "init(dictionary:context:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "VirtualTourist_EM/Pin.swift"
+            timestampString = "475673101.942315"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "init(dictionary:context:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

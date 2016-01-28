@@ -7,30 +7,44 @@
 //
 
 import UIKit
+import CoreData
 import MapKit
 
-class Pin: NSObject ,MKAnnotation{
+@objc(Pin)
+
+class Pin : NSManagedObject, MKAnnotation {
     
     struct Keys {
         static let Latitude = "latitude"
         static let Longitude = "longitude"
-        static let totalPages = "totalPages"
+        static let TotalPages = "totalPages"
     }
     
-    var latitude : Double
-    var longitude : Double
-    var totalPages: NSNumber?
+    @NSManaged var latitude: Double
+    @NSManaged var longitude: Double
+    @NSManaged var photos: [Photo]?
+    @NSManaged var totalPages: NSNumber?
     
-    var title: String? = "Press To View Photo album"
-    var subtitle: String? = "Flicker Area Pictures"
-
+    var title: String? = "View album"
+    var subtitle : String? = " flickr Area Photos"
     
-    init(dictionary: [String : AnyObject]) {
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+    
+    init(dictionary: [String : AnyObject], context: NSManagedObjectContext) {
+        let entity =  NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
+        
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+        
         latitude = dictionary[Keys.Latitude] as! Double
         longitude = dictionary[Keys.Longitude] as! Double
-
     }
-
+    
+    lazy var sharedContext: NSManagedObjectContext! = {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
+    }()
+    
     // MARK - MKAnnotation
     
     var coordinate: CLLocationCoordinate2D {
@@ -43,5 +57,19 @@ class Pin: NSObject ,MKAnnotation{
         self.longitude = newCoordinate.longitude
         didChangeValueForKey("coordinate")
     }
+    
+    // Delete all pin's photos
+    func deletePhotos() {
+        if let photos = self.photos {
+            for photo in photos {
+                deletePhoto(photo)
+            }
+        }
     }
-
+    
+    // Delete one pin photo
+    func deletePhoto(photo: Photo) {
+        photo.pin = nil
+        sharedContext.deleteObject(photo)
+    }
+}

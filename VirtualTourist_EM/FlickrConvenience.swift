@@ -14,19 +14,14 @@ import CoreData
 // MARK: - Convenient Resource Methods
 
 extension FlickrClient {
-    
-    // Mark: - Core Data Context
-    
-   // var sharedContext: NSManagedObjectContext{
-    //    return CoreDataStackManager.sharedInstance().managedObjectContext
-   // }
-    
+  
     // MARK: - GET Convenience Methods
     
     func getPhotos(pin: Pin, completionHandler: (success: Bool, photos: [[String: AnyObject]]?, totalPhotos: Int, totalPages: Int, errorString: String?) -> Void) {
     
         // Compute random page for query
         var randomPage = 1
+        
         if let numberOfPages = pin.totalPages {
             randomPage = Int((arc4random_uniform(UInt32(numberOfPages as Int)))) + 1
         }
@@ -64,9 +59,6 @@ extension FlickrClient {
                     
                     // Save and store the number of pages returned for the pin
                     pin.totalPages = totalPagesVal
-                    //dispatch_async(dispatch_get_main_queue()){
-                    //    CoreDataStackManager.sharedInstance().saveContext()
-                    //}
                     
                     if totalPhotosVal > 0 {
                         if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {

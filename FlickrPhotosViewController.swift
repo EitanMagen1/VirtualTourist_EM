@@ -8,12 +8,14 @@
 
 import UIKit
 import MapKit
+import CoreData
+
 
 private let reuseIdentifier = "FlickerCell"
-
-class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource , UICollectionViewDelegate , MKMapViewDelegate {
+// core data step 8 add NSFetchedResultsControllerDelegate
+class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource , UICollectionViewDelegate , MKMapViewDelegate , NSFetchedResultsControllerDelegate {
     
-    var photos : [Photo] = []
+    // var photos : [Photo] = [] // core data step 4 removing the array
     var pin: Pin!
     var latitudeDelta: Double = 0.1
     var longitudeDelta: Double = 0.1
@@ -43,52 +45,112 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         self.mapview.region.span = MKCoordinateSpan(latitudeDelta: self.latitudeDelta, longitudeDelta: self.longitudeDelta)
         self.mapview.addAnnotation(pin!)
         
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+                // Register cell classes
+       // self.collectionView2!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        // core data step 9
+        fetchedResultsController.delegate = self
+        // core data Step 2: Start the fetch by invoking performFetch
         
-        // Register cell classes
-        self.collectionView2!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {}
         
-        // Do any additional setup after loading the view.
+       
+
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        for photo in fetchedResultsController.fetchedObjects as! [Photo]{
+            if (photo.albumImage == nil) {
+                self.downloadingCount++
+            }
+            
+        }
         if self.downloadingCount == 0 {
             self.newDownloadButton.hidden = false
             self.enableUserInteraction = true
         }
         
-        
-        loadData()
+        if (pin.photos!.isEmpty) {
+            loadData()
+        }
         
     }
     
     @IBAction func newDownloadTouchUpInside(sender: AnyObject) {
         
-        photos = []
-        
+        for photo in fetchedResultsController.fetchedObjects as! [Photo]{
+            FlickrClient.Caches.imageCache.removeImage(NSURL(string: photo.imageURL!)!.lastPathComponent!)
+            pin.deletePhoto(photo)
+            CoreDataStackManager.sharedInstance().saveContext()
+        }
         loadData()
     }
-
+    
+    
+    // MARK: - Configure Cell
+    
+    func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
+        var cellImage = UIImage(named: "posterPlaceHolder")
+        
+        cell.imageView!.image = nil
+        activityIndicator.hidden = true
+        
+        // Set the Album Image
+        if photo.imageURL == nil || photo.imageURL == "" {
+            cellImage = UIImage(named: "noImage")
+        } else if photo.albumImage != nil {
+            cellImage = photo.albumImage
+        } else { // This is the interesting case. The pin has an image name, but it is not downloaded yet.
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+            
+            FlickrClient.sharedInstance().getPhoto(NSURL(string: photo.imageURL!)!) { (success, result, errorString) in
+                if (success == true) {
+                    // update the model, so that the infrmation gets cashed
+                    photo.albumImage = result
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        cell.imageView!.image = result
+                        
+                        self.activityIndicator.stopAnimating()
+                        self.activityIndicator.hidden = true
+                        
+                        self.downloadingCount--
+                        if self.downloadingCount == 0 {
+                            self.newDownloadButton.hidden = false
+                            self.enableUserInteraction = true
+                        }
+                    })
+                } else {
+                    print(errorString)
+                }
+            }
+            // This is the custom property on this cell. See TaskCancelingTableViewCell.swift for details.
+            //cell.taskToCancelifCellIsReused = task
+        }
+        
+        cell.imageView!.image = cellImage
+    }
+    
     
     func loadData() {
         self.newDownloadButton.hidden = true
         self.enableUserInteraction = false
         self.downloadingCount = Int(FlickrClient.Constants.PER_PAGE)!
-            showActivityIndicator()
+        
         FlickrClient.sharedInstance().getPhotos(pin) { (success, result, totalPhotos, totalPages, errorString) in
             if (success == true) {
                 print("\(totalPhotos) photos have been found!")
+                //print(result)
                 
                 // Parse the array of photo dictionaries
                 let _ = result!.map() { (dictionary: [String : AnyObject]) -> Photo in
-                    
-                    let photo = Photo()
-                    photo.imageURL = dictionary[FlickrClient.Constants.EXTRAS] as? String
+                    let photo = Photo(dictionary: dictionary, context: self.sharedContext)
                     photo.pin = self.pin
-                    self.photos.append(photo)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    
                     return photo
                 }
                 
@@ -97,29 +159,45 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
                     self.collectionView2.reloadData()
                 }
             } else {
-                self.presentError("Finding photos error! \(errorString)")
+                print("Finding photos error!")
             }
         }
     }
     
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - Core Data Convenience.
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
+    // lazy fetchedResultsController property
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
+        fetchRequest.predicate = NSPredicate(format: "pin == %@", self.pin)
+        fetchRequest.sortDescriptors = []
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: self.sharedContext, sectionNameKeyPath: nil, cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        return fetchedResultsController
+    }()
+    
+    // MARK: - UICollectionViewDataSource
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        let sectionInfo = self.fetchedResultsController.sections![section]
+        
+        return sectionInfo.numberOfObjects
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoCollectionViewCell", forIndexPath: indexPath) as! PhotoCollectionViewCell
         
-        let photo = photos[indexPath.row]
-        
-       configureCell(cell, photo: photo)
+        configureCell(cell, photo: photo)
         
         return cell
     }
@@ -128,81 +206,55 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         if (self.enableUserInteraction) {
-
-        photos.removeAtIndex(indexPath.row)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.collectionView2.reloadData()
-        }
+            // Delete image
+            let photo = self.fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+            self.pin.deletePhoto(photo)
+            CoreDataStackManager.sharedInstance().saveContext()
         }
     }
-
-    // MARK: - Configure Cell
     
-    func configureCell(cell: PhotoCollectionViewCell, photo: Photo) {
-        var cellImage = UIImage(named: "posterPlaceHolder")
-        
-        cell.imageView!.image = nil
-        self.downloadingCount--
-        if self.downloadingCount == 0 {
-            self.newDownloadButton.hidden = false
-            showActivityIndicator()
-            self.enableUserInteraction = true
-        }
-
-        // Set the Album Image
-        if photo.imageURL == nil || photo.imageURL == "" {
-            cellImage = UIImage(named: "noImage")
-        } else if photo.albumImage != nil {
-            cellImage = photo.albumImage
-        } else { // This is the interesting case. The pin has an image name, but it is not downloaded yet.
-            
-            FlickrClient.sharedInstance().getPhoto(NSURL(string: photo.imageURL!)!) { (success, result, errorString) in
-                if (success == true) {
-                    // update the model, so that the infrmation gets cashed
-                    photo.albumImage = result
-                    dispatch_async(dispatch_get_main_queue()) {
-                        cell.imageView!.image = result
-                        
-                        }
-
-                } else {
-                    self.presentError("\(errorString)")
-                }
+    // MARK: - Fetched Results Controller Delegate
+    
+    func controllerWillChangeContent(controller: NSFetchedResultsController) {
+       // print("Collection controllerWillChangeContent")
+        insertedIndexPaths = [NSIndexPath]()
+        deletedIndexPaths  = [NSIndexPath]()
+        updatedIndexPaths  = [NSIndexPath]()
+    }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?,
+        forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+            switch type {
+            case .Insert:
+                //print("insert")
+                //self.collectionView.insertItemsAtIndexPaths([newIndexPath!])
+                insertedIndexPaths.append(newIndexPath!)
+            case .Delete:
+                //print("delete")
+                //self.collectionView.deleteItemsAtIndexPaths([indexPath!])
+                deletedIndexPaths.append(indexPath!)
+            case .Update:
+                //print("uptade")
+                //self.collectionView.reloadItemsAtIndexPaths([indexPath!])
+                updatedIndexPaths.append(indexPath!)
+            default:
+                break
             }
-        }
-        
-        cell.imageView!.image = cellImage
-    }
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.draggable = true
-            pinView!.pinTintColor = MKPinAnnotationView.purplePinColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .InfoDark)
-        }
-        else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
     }
     
-    func showActivityIndicator() {
-        if activityIndicator.hidden {
-            activityIndicator.hidden = false
-            activityIndicator.startAnimating()
-        } else {
-            activityIndicator.stopAnimating()
-            activityIndicator.hidden = true
-            activityIndicator.hidesWhenStopped = true
-            
-            
-        }
+    func controllerDidChangeContent(controller: NSFetchedResultsController) {
+        // Perform updates into the collectionView
+      //  print("Collection controllerDidChangeContent")
+        collectionView2.performBatchUpdates({() -> Void in
+            for indexPath in self.insertedIndexPaths {
+                self.collectionView2.insertItemsAtIndexPaths([indexPath])
+            }
+            for indexPath in self.deletedIndexPaths {
+                self.collectionView2.deleteItemsAtIndexPaths([indexPath])
+            }
+            for indexPath in self.updatedIndexPaths {
+                self.collectionView2.reloadItemsAtIndexPaths([indexPath])
+            }
+            }, completion: nil)
     }
-
 }
