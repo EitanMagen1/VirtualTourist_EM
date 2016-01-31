@@ -13,6 +13,8 @@ class FlickrClient : NSObject {
     /* Shared session */
     var session: NSURLSession
     
+    static let sharedInstance = FlickrClient()
+
     var photos: [Photo]?
     
     /* Authentication state */
@@ -120,16 +122,8 @@ class FlickrClient : NSObject {
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
-    // MARK: - Shared Instance
     
-    class func sharedInstance() -> FlickrClient {
-        
-        struct Singleton {
-            static var sharedInstance = FlickrClient()
-        }
-        
-        return Singleton.sharedInstance
-    }
+    
     
     // MARK: - Shared Image Cache
     

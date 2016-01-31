@@ -106,7 +106,7 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
             activityIndicator.hidden = false
             activityIndicator.startAnimating()
             
-            FlickrClient.sharedInstance().getPhoto(NSURL(string: photo.imageURL!)!) { (success, result, errorString) in
+            FlickrClient.sharedInstance.getPhoto(NSURL(string: photo.imageURL!)!) { (success, result, errorString) in
                 if (success == true) {
                     // update the model, so that the infrmation gets cashed
                     photo.albumImage = result
@@ -140,7 +140,7 @@ class FlickrPhotosViewController: UIViewController ,UICollectionViewDataSource ,
         self.enableUserInteraction = false
         self.downloadingCount = Int(FlickrClient.Constants.PER_PAGE)!
         
-        FlickrClient.sharedInstance().getPhotos(pin) { (success, result, totalPhotos, totalPages, errorString) in
+        FlickrClient.sharedInstance.getPhotos(pin) { (success, result, totalPhotos, totalPages, errorString) in
             if (success == true) {
                 print("\(totalPhotos) photos have been found!")
                 //print(result)
